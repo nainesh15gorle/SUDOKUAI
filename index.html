@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sudoku AI — CSP Solver</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">⬛</span>
+        <span class="logo-text">SUDOKU<em>AI</em></span>
+      </div>
+      <div class="header-tag">Constraint Satisfaction Problem Solver</div>
+    </div>
+  </header>
+  <main>
+
+    <!-- LEFT PANEL: AI Info -->
+    <aside class="panel panel-left">
+
+      <div class="info-card">
+        <h3 class="card-title"><span class="dot dot-yellow"></span>What is a CSP?</h3>
+        <p>Sudoku is a classic <strong>Constraint Satisfaction Problem</strong>. Every empty cell is a <em>variable</em>, the digits 1–9 are its <em>domain</em>, and the row/column/box rules are the <em>constraints</em>.</p>
+      </div>
+
+      <div class="info-card">
+        <h3 class="card-title"><span class="dot dot-blue"></span>Backtracking Search</h3>
+        <p>The AI picks an empty cell, tries every digit, checks all constraints with <code>isSafe()</code>, and recurses. If it hits a dead-end it <em>backtracks</em> — undoing the last choice and trying the next.</p>
+      </div>
+
+      <div class="info-card">
+        <h3 class="card-title"><span class="dot dot-green"></span>MRV Heuristic</h3>
+        <p><strong>Minimum Remaining Values</strong> — the AI always picks the cell with the fewest legal digits first. This dramatically prunes the search tree and speeds solving.</p>
+      </div>
+
+      <div class="info-card">
+        <h3 class="card-title"><span class="dot dot-red"></span>isSafe() Constraints</h3>
+        <ul class="constraint-list">
+          <li>No duplicate in any <strong>row</strong></li>
+          <li>No duplicate in any <strong>column</strong></li>
+          <li>No duplicate in any <strong>3×3 box</strong></li>
+        </ul>
+      </div>
+
+    </aside>
+
+    <!-- CENTER: Game -->
+    <section class="game-section">
+
+      <!-- Status bar -->
+      <div class="status-bar">
+        <div id="status-msg" class="status-msg">Select a cell and enter a digit, or use the buttons below.</div>
+        <div class="step-counter">Steps: <span id="step-count">0</span></div>
+      </div>
+
+      <!-- 9×9 Grid -->
+      <div class="grid-wrapper">
+        <div id="sudoku-grid" class="sudoku-grid"></div>
+      </div>
+
+      <!-- Speed slider (for visualisation) -->
+      <div class="speed-row">
+        <label for="speed-slider">Visualisation Speed</label>
+        <input type="range" id="speed-slider" min="1" max="5" value="3" />
+        <span id="speed-label">Medium</span>
+      </div>
+
+      <!-- Buttons -->
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-solve">▶ Solve (AI)</button>
+        <button class="btn btn-secondary" id="btn-hint">💡 Hint</button>
+        <button class="btn btn-secondary" id="btn-new">⟳ New Puzzle</button>
+        <button class="btn btn-outline" id="btn-reset">↺ Reset</button>
+        <button class="btn btn-outline" id="btn-step">⏩ Step</button>
+      </div>
+
+      <!-- Number pad -->
+      <div class="numpad" id="numpad">
+        <button class="num-btn" data-num="1">1</button>
+        <button class="num-btn" data-num="2">2</button>
+        <button class="num-btn" data-num="3">3</button>
+        <button class="num-btn" data-num="4">4</button>
+        <button class="num-btn" data-num="5">5</button>
+        <button class="num-btn" data-num="6">6</button>
+        <button class="num-btn" data-num="7">7</button>
+        <button class="num-btn" data-num="8">8</button>
+        <button class="num-btn" data-num="9">9</button>
+        <button class="num-btn erase-btn" data-num="0">✕</button>
+      </div>
+
+    </section>
+
+    <!-- RIGHT PANEL: AI Log -->
+    <aside class="panel panel-right">
+      <h3 class="card-title"><span class="dot dot-purple"></span>AI Step Log</h3>
+      <div id="ai-log" class="ai-log">
+        <div class="log-entry log-info">Waiting for AI to start…</div>
+      </div>
+      <button class="btn btn-outline btn-sm" id="btn-clear-log">Clear Log</button>
+
+      <div class="legend">
+        <h4>Legend</h4>
+        <div class="legend-row"><span class="swatch swatch-explore"></span> Exploring</div>
+        <div class="legend-row"><span class="swatch swatch-backtrack"></span> Backtracking</div>
+        <div class="legend-row"><span class="swatch swatch-solved"></span> Solved</div>
+        <div class="legend-row"><span class="swatch swatch-hint"></span> Hint</div>
+        <div class="legend-row"><span class="swatch swatch-invalid"></span> Invalid</div>
+        <div class="legend-row"><span class="swatch swatch-given"></span> Given (fixed)</div>
+      </div>
+    </aside>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
