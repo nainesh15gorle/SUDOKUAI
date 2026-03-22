@@ -1,0 +1,17 @@
+# Ignore system files
+.bash_history
+*.log
+*.json
+*.backup
+
+# Ignore IDE files
+.idea/
+.vscode/
+
+# Ignore OS files
+.DS_Store
+
+# Ignore build/output
+node_modules/
+bin/
+out/
